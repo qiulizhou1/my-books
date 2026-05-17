@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>灵魂的朝圣：三部关于生长与自由的心灵之书</title>
     <style>
-        /* 融合指定的六大高级色彩 */
+        /* 核心高级色彩系统 */
         :root {
-            --color-blue: #5e94b0;        /* 静谧天空蓝 */
-            --color-beige: #dcd5a1;       /* 浅卡其米 */
-            --color-olive: #aca75a;       /* 灰绿橄榄 */
-            --color-green-light: #84aa43;  /* 嫩草绿 */
-            --color-green-dark: #6f8e30;   /* 深苔绿 */
-            --color-orange: #df6a24;       /* 活力旷野橙 */
-            
+            --color-blue: #5e94b0;        
+            --color-beige: #dcd5a1;       
+            --color-olive: #aca75a;       
+            --color-green-light: #84aa43;  
+            --color-green-dark: #6f8e30;   
+            --color-orange: #df6a24;       
             --bg-home: #eef0e5;        
             --text-main: #3d5a45;      
         }
@@ -21,11 +20,11 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { height: 100%; font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-home); overflow: hidden; }
         
-        /* 自定义羽毛笔鼠标 */
+        /* 艺术鼠标样式 */
         html { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%233d5a45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>') 0 24, auto; }
         .book-wrapper, .back-btn, .music-toggle { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23608066" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>') 0 24, pointer; }
 
-        /* 音乐控制图标 */
+        /* 音乐控制 */
         .music-toggle {
             position: fixed; top: 20px; right: 20px; z-index: 100;
             width: 40px; height: 40px; background: rgba(255,255,255,0.6);
@@ -37,82 +36,165 @@
         .music-toggle.playing { animation: rotateMusic 4s linear infinite; color: var(--color-green-light); }
         @keyframes rotateMusic { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* 舞台控制框架 */
+        /* ==================== 🎬 PPT式全局舞台转场 ==================== */
         .page {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 2rem; transition: opacity 0.6s ease, transform 0.6s ease;
-            opacity: 0; pointer-events: none; transform: scale(0.98); overflow: hidden;
+            padding: 2rem; overflow: hidden;
+            opacity: 0; pointer-events: none;
+            transform: scale(1.06) translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                        transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .page.active { opacity: 1; pointer-events: auto; transform: scale(1); }
+        .page.active { opacity: 1; pointer-events: auto; transform: scale(1) translateY(0); }
 
-        /* ==================== 1. 首页书架 ==================== */
+        /* ==================== 1. 首页华丽布局 ==================== */
         #home-page { 
-            background: radial-gradient(circle at 20% 20%, #f4f6f0 0%, transparent 40%),
-                        radial-gradient(circle at 80% 80%, #e2ebd9 0%, transparent 50%),
-                        linear-gradient(135deg, #eef0e5 0%, var(--color-beige) 100%); 
+            background: linear-gradient(135deg, #eef0e5 0%, var(--color-beige) 100%);
             text-align: center; 
+            transition: background 1s ease; 
         }
+        
+        /* 交互微粒画布 */
+        #particle-canvas { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index: 1; }
+
+        .home-content-box { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; width: 100%; transition: all 0.5s ease; }
+
+        /* PPT式有序入场 */
+        .home-anim-1 { opacity: 0; transform: translateY(-30px); animation: homeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.1s; }
+        .home-anim-2 { opacity: 0; transform: translateY(20px); animation: homeFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s; }
+        .home-anim-3 { opacity: 0; transform: translateY(40px); animation: homeFadeIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s; }
+        .home-anim-4 { opacity: 0; transform: translateY(30px); animation: homeFadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.8s; }
+
+        @keyframes homeFadeIn { to { opacity: 1; transform: translateY(0); } }
+
         .main-title { 
-            font-size: 2.5rem; font-weight: 700; margin-bottom: 1.2rem; letter-spacing: 4px;
-            background: linear-gradient(to right, var(--color-green-dark), var(--color-orange));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 2.8rem; font-weight: 800; margin-bottom: 1.2rem; letter-spacing: 5px;
+            background: linear-gradient(to right, var(--color-green-dark), var(--color-orange), var(--color-blue));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            transition: all 0.5s ease;
         }
-        .subtitle { font-size: 1.1rem; margin-bottom: 4rem; color: var(--color-blue); font-weight: 500; letter-spacing: 2px; opacity: 0.9; }
-        .book-shelf { display: flex; justify-content: center; gap: 5rem; max-width: 1200px; width: 100%; flex-wrap: wrap; }
+        .subtitle { font-size: 1.15rem; margin-bottom: 4.5rem; color: #4e6a55; font-weight: 500; letter-spacing: 2px; opacity: 0.85; transition: all 0.5s ease; }
         
-        .book-wrapper { position: relative; display: flex; flex-direction: column; align-items: center; transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-        .cover-container { position: relative; width: 200px; height: 290px; border-radius: 4px 12px 12px 4px; overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); transition: box-shadow 0.4s ease; }
+        .book-shelf { display: flex; justify-content: center; gap: 4.5rem; max-width: 1200px; width: 100%; flex-wrap: wrap; margin-bottom: 4rem; }
         
-        .cover-container::after {
-            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border: 1px solid rgba(61, 90, 69, 0.4); border-radius: 4px 12px 12px 4px;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            box-shadow: inset 0 0 8px rgba(96, 128, 102, 0.2);
+        /* 📚 书本纯粹比例平滑放大效果（拒绝任何 3D 扭曲变形） */
+        .book-wrapper { 
+            position: relative; display: flex; flex-direction: column; align-items: center; 
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            width: 195px;
+        }
+        .cover-container { 
+            position: relative; width: 195px; height: 280px; border-radius: 4px 14px 14px 4px; 
+            overflow: hidden; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
         .book-cover { width: 100%; height: 100%; object-fit: cover; }
-        .book-wrapper:hover { transform: scale(1.05); }
         
-        .book-title-brief { margin-top: 1.5rem; font-size: 1.05rem; font-weight: 600; color: var(--color-olive); transition: color 0.3s; }
+        /* 悬停隐藏金句气泡 */
+        .hover-quote-bubble {
+            position: absolute; top: -55px; background: rgba(255, 255, 255, 0.95);
+            padding: 8px 14px; border-radius: 12px; font-size: 0.85rem; font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06); width: 220px; text-align: center;
+            opacity: 0; transform: translateY(12px) scale(0.92); pointer-events: none;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            color: var(--text-main); font-style: italic; z-index: 10;
+        }
+        .hover-quote-bubble::after {
+            content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+            border-width: 6px 6px 0; border-style: solid; border-color: rgba(255,255,255,0.95) transparent;
+        }
+
+        /* 纯粹优雅地等比例平滑放大 */
+        .book-wrapper:hover { transform: translateY(-10px); }
+        .book-wrapper:hover .cover-container {
+            transform: scale(1.05); 
+        }
+        
+        /* 为每本书定制更细腻的高光阴影，不改变形状 */
+        .book-wrapper:nth-child(1):hover .cover-container { box-shadow: 0 20px 40px rgba(111, 142, 48, 0.25); }
+        .book-wrapper:nth-child(2):hover .cover-container { box-shadow: 0 20px 40px rgba(94, 148, 176, 0.25); }
+        .book-wrapper:nth-child(3):hover .cover-container { box-shadow: 0 20px 40px rgba(223, 106, 36, 0.25); }
+        .book-wrapper:hover .hover-quote-bubble { opacity: 1; transform: translateY(0) scale(1); }
+
+        .book-title-brief { margin-top: 1.5rem; font-size: 1.1rem; font-weight: 700; color: var(--text-main); transition: color 0.3s ease; letter-spacing: 1px; white-space: nowrap; }
         .book-wrapper:hover .book-title-brief { color: var(--color-orange); }
 
-        /* ==================== 2. 里页通用排版 ==================== */
-        .dynamic-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
-        
-        .detail-container { 
-            position: relative; z-index: 2; max-width: 1000px; width: 100%;
-            display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; margin: auto;
-            background: rgba(255, 255, 255, 0.08); padding: 3rem; border-radius: 24px;
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.04), inset 0 0 0 1px rgba(255,255,255,0.3);
-        }
-        
-        /* 详情页书本精致实体微边框 */
-        .detail-img { 
-            width: 240px; height: 350px; object-fit: cover; 
-            border-radius: 4px 15px 15px 4px; 
-            border: 1px solid rgba(0, 0, 0, 0.12); 
-            box-shadow: 0 20px 45px rgba(0,0,0,0.12); 
-        }
-        
-        .info { flex: 1; min-width: 300px; text-align: left; }
-        .meta { font-size: 0.9rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,0,0,0.06); font-weight: 500; }
-        .desc { font-size: 1.05rem; margin-bottom: 2rem; text-align: justify; color: #2d2d2d; line-height: 1.75; }
-        .back-btn { display: inline-block; margin-top: 2.5rem; text-decoration: none; font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid currentColor; padding-bottom: 2px; transition: all 0.3s; }
-        .back-btn:hover { opacity: 0.6; }
+        /* 🎬 舞台聚焦效果 */
+        .book-shelf:hover .book-wrapper:not(:hover) { transform: scale(0.93); opacity: 0.45; filter: blur(2px); }
+        .book-shelf:hover ~ .home-quote-panel { opacity: 0.3; filter: blur(1.5px); }
+        .book-shelf:hover ~ .main-title, .book-shelf:hover ~ .subtitle { opacity: 0.3; filter: blur(1.5px); }
 
-        /* ==================== 🍂 特效一：布鲁克林有棵树 ==================== */
+        .home-quote-panel {
+            max-width: 750px; width: 100%; padding: 1.5rem 2rem; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.02), inset 0 0 0 1px rgba(255,255,255,0.5);
+            font-style: italic; color: #4a5f50; font-size: 0.95rem; line-height: 1.6; letter-spacing: 1px;
+            transition: all 0.5s ease;
+        }
+
+        /* ==================== 2. 详情页排版 ==================== */
+        .detail-container { 
+            position: relative; z-index: 2; max-width: 1100px; width: 100%;
+            display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; margin: auto;
+            background: rgba(255, 255, 255, 0.15); padding: 3.5rem; border-radius: 28px;
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.05), inset 0 0 0 1px rgba(255,255,255,0.4);
+        }
+        
+        .detail-img { 
+            width: 250px; height: 365px; object-fit: cover; 
+            border-radius: 4px 15px 15px 4px; border: 1px solid rgba(0, 0, 0, 0.12); 
+            box-shadow: 0 25px 55px rgba(0,0,0,0.15); 
+        }
+        
+        .info { flex: 1; min-width: 320px; text-align: left; }
+        .one-liner { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.8rem; line-height: 1.4; }
+        .meta { font-size: 0.9rem; margin-bottom: 1rem; font-weight: 500; opacity: 0.8; }
+        
+        .tags-div { display: flex; gap: 0.6rem; margin-bottom: 1.5rem; }
+        .tag-item { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; background: rgba(255,255,255,0.4); box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .desc { font-size: 1.05rem; margin-bottom: 2rem; text-align: justify; color: #232323; line-height: 1.8; }
+        
+        .quote { 
+            padding: 1.2rem 1.5rem; border-radius: 12px; background: rgba(255,255,255,0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02); font-style: italic; margin-bottom: 1.5rem;
+        }
+        
+        .back-btn { 
+            display: inline-block; text-decoration: none; font-weight: 700; font-size: 1rem; 
+            border-bottom: 2px solid currentColor; padding-bottom: 4px; transition: all 0.3s ease; 
+        }
+        .back-btn:hover { opacity: 0.6; transform: translateX(-6px); }
+
+        /* 🎬 详情页PPT元素排队飞入 */
+        .animate-item {
+            opacity: 0; transform: translateY(25px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .page.active .animate-item:nth-child(1) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
+        .page.active .animate-item:nth-child(2) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
+        .page.active .animate-item:nth-child(3) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
+        .page.active .animate-item:nth-child(4) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
+        .page.active .animate-item:nth-child(5) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
+        .page.active .animate-item:nth-child(6) { transition-delay: 0.7s; opacity: 1; transform: translateY(0); }
+        
+        .page.active .detail-img { 
+            opacity: 0; transform: scale(0.9) rotate(-3deg);
+            transition: opacity 0.7s ease 0.1s, transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
+        }
+        .page.active .detail-img { opacity: 1; transform: scale(1) rotate(0deg); }
+
+        /* ==================== 特效一：布鲁克林有棵树 ==================== */
         #page-brooklyn { background: linear-gradient(135deg, #f0f4ef 0%, #dbe6dd 100%); }
-        #page-brooklyn .one-liner { color: var(--color-green-dark); font-size: 1.5rem; font-weight: 800; } 
-        #page-brooklyn .meta { color: var(--color-olive); } 
-        #page-brooklyn .quote { border-left: 4px solid var(--color-green-dark); color: var(--color-green-light); font-weight: 600; } 
+        #page-brooklyn .one-liner { color: var(--color-green-dark); } 
+        #page-brooklyn .meta, #page-brooklyn .tag-item { color: var(--color-olive); } 
+        #page-brooklyn .quote { border-left: 5px solid var(--color-green-dark); color: #4b663c; } 
         #page-brooklyn .back-btn { color: var(--color-green-dark); }
         
         .leaves-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
         .leaf { position: absolute; top: -40px; opacity: 0; pointer-events: none; }
         #page-brooklyn.active .leaf { animation: leafFall linear infinite; }
-        
         @keyframes leafFall {
             0% { transform: translateY(0) translateX(0) rotate(0deg) scale(0.8); opacity: 0; }
             10% { opacity: 0.65; }
@@ -120,70 +202,51 @@
             100% { transform: translateY(105vh) translateX(150px) rotate(720deg) scale(1.1); opacity: 0; }
         }
 
-        /* ==================== 🫧 特效二：你当像鸟飞往你的山（重构：透明多彩、曲线灵动运动） ==================== */
+        /* ==================== 特效二：你当像鸟飞往你的山 ==================== */
         #page-bird { background: linear-gradient(to bottom, #eef4f8 0%, #d9e6ee 100%); }
-        #page-bird .one-liner { color: var(--color-blue); font-size: 1.5rem; font-weight: 800; } 
-        #page-bird .meta { color: var(--color-olive); } 
-        #page-bird .quote { border-left: 4px solid var(--color-blue); color: #436f88; font-weight: 600; } 
+        #page-bird .one-liner { color: var(--color-blue); } 
+        #page-bird .meta, #page-bird .tag-item { color: #5a7d90; } 
+        #page-bird .quote { border-left: 5px solid var(--color-blue); color: #3b5f75; } 
         #page-bird .back-btn { color: var(--color-blue); }
         
         .bubble-container { position: absolute; width: 100%; height: 100%; top: 0; left: 0; }
-        
-        /* 纯净去边框 + 极其梦幻的透明七彩肥皂泡晕染特效 */
         .bubble { 
             position: absolute; bottom: -60px; 
-            background: radial-gradient(circle at 30% 30%, 
-                        rgba(255,255,255,0.8) 0%, 
-                        rgba(252,165,165,0.25) 30%,  /* 幻彩粉 */
-                        rgba(253,230,138,0.25) 50%,  /* 幻彩黄 */
-                        rgba(167,243,208,0.2) 70%,   /* 幻彩绿 */
-                        rgba(147,197,253,0.25) 85%,  /* 幻彩蓝 */
-                        transparent 100%);
-            border: none; 
-            border-radius: 50%; 
-            /* 柔和复杂的内阴影与外虹光，保证完全通透、高级且鲜明显眼 */
-            box-shadow: inset -3px -3px 10px rgba(255,255,255,0.6), 
-                        inset 3px 3px 12px rgba(147,197,253,0.3),
-                        0 8px 25px rgba(147,197,253,0.15);
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85) 0%, rgba(252,165,165,0.25) 30%, rgba(253,230,138,0.25) 50%, rgba(167,243,208,0.2) 70%, rgba(147,197,253,0.25) 85%, transparent 100%);
+            border: none; border-radius: 50%; 
+            box-shadow: inset -3px -3px 10px rgba(255,255,255,0.6), inset 3px 3px 12px rgba(147,197,253,0.3), 0 8px 25px rgba(147,197,253,0.12);
             opacity: 0; 
         }
-        
-        /* 触发多重灵动曲线路径动画，打破单一往上飞的僵硬死板 */
         #page-bird.active .bubble { animation: bubbleDynamic linear infinite; }
-        
         @keyframes bubbleDynamic {
             0% { transform: translateY(0) translateX(0) scale(0.8); opacity: 0; }
-            10% { opacity: 0.85; transform: translateY(-10vh) translateX(15px) scale(0.85); }
-            30% { transform: translateY(-35vh) translateX(-25px) scale(0.95); }
-            50% { transform: translateY(-55vh) translateX(20px) scale(1); }
-            70% { transform: translateY(-75vh) translateX(-15px) scale(1.05); }
-            90% { opacity: 0.85; transform: translateY(-95vh) translateX(10px) scale(1.1); }
-            100% { transform: translateY(-112vh) translateX(-5px) scale(1.15); opacity: 0; }
+            10% { opacity: 0.85; transform: translateY(-15vh) translateX(25px) scale(0.85); }
+            95% { opacity: 0.85; transform: translateY(-102vh) translateX(15px) scale(1.1); }
+            100% { transform: translateY(-115vh) translateX(0px) scale(1.15); opacity: 0; }
         }
 
-        /* ==================== ⏳ 特效三：撒哈拉的故事 ==================== */
+        /* ==================== 特效三：撒哈拉的故事 ==================== */
         #page-sahara { background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 40%, #fca5a5 100%); }
-        #page-sahara .one-liner { color: var(--color-orange); font-size: 1.5rem; font-weight: 800; } 
-        #page-sahara .meta { color: #8e7a63; } 
-        #page-sahara .quote { border-left: 4px solid var(--color-orange); color: #b04e15; font-weight: 600; } 
+        #page-sahara .one-liner { color: var(--color-orange); } 
+        #page-sahara .meta, #page-sahara .tag-item { color: #9c623b; } 
+        #page-sahara .quote { border-left: 5px solid var(--color-orange); color: #923a04; } 
         #page-sahara .back-btn { color: var(--color-orange); }
         
         .sand-container { position: absolute; width: 100%; height: 100%; top:0; left:0; }
         .grain { position: absolute; background: var(--color-orange); border-radius: 50%; opacity: 0; } 
         #page-sahara.active .grain { animation: sandFall linear infinite; }
-        
         @keyframes sandFall {
             0% { transform: translateY(-20px) translateX(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
+            10% { opacity: 0.55; }
             100% { transform: translateY(105vh) translateX(120px) rotate(360deg); opacity: 0; }
         }
 
         @media (max-width: 850px) {
-            .detail-container { flex-direction: column; text-align: center; gap: 2rem; padding: 2rem; max-height: 90vh; overflow-y: auto; }
+            .detail-container { flex-direction: column; text-align: center; gap: 2rem; padding: 2rem; max-height: 95vh; overflow-y: auto; }
             .info { text-align: center; }
             .quote { border-left: none; border-top: 4px solid currentColor; padding-left: 0; padding-top: 1rem; }
-            .main-title { font-size: 2rem; }
+            .main-title { font-size: 2.2rem; }
+            .book-shelf { gap: 2.5rem; }
         }
     </style>
 </head>
@@ -194,20 +257,32 @@
     </div>
 
     <section id="home-page" class="page active">
-        <h1 class="main-title">在文字中流浪，在阵痛中盛开</h1>
-        <p class="subtitle">用笔尖轻触封面，翻开属于它们的独立篇章</p>
-        <div class="book-shelf">
-            <div class="book-wrapper" onclick="switchPage('page-brooklyn')">
-                <div class="cover-container"><img src="https://i02piccdn.sogoucdn.com/3bb970cd9426903d" alt="布鲁克林有棵树" class="book-cover"></div>
-                <span class="book-title-brief">《布鲁克林有棵树》</span>
+        <canvas id="particle-canvas"></canvas>
+        
+        <div class="home-content-box">
+            <h1 class="main-title home-anim-1">在文字中流浪，在阵痛中盛开</h1>
+            <p class="subtitle home-anim-2">用笔尖轻触封面，翻开属于它们的独立篇章</p>
+            
+            <div class="book-shelf home-anim-3">
+                <div class="book-wrapper" onclick="switchPage('page-brooklyn')" onmouseenter="changeBg('#f4f7f2')" onmouseleave="resetBg()">
+                    <div class="hover-quote-bubble">“活着，奋斗着，守卫人类的尊严。”</div>
+                    <div class="cover-container"><img src="https://i02piccdn.sogoucdn.com/3bb970cd9426903d" alt="布鲁克林有棵树" class="book-cover"></div>
+                    <span class="book-title-brief">《布鲁克林有棵树》</span>
+                </div>
+                <div class="book-wrapper" onclick="switchPage('page-bird')" onmouseenter="changeBg('#eef5f9')" onmouseleave="resetBg()">
+                    <div class="hover-quote-bubble">“你可以穿上衣服扮演另一个人，但你究竟是谁？”</div>
+                    <div class="cover-container"><img src="http://5b0988e595225.cdn.sohucs.com/images/20200308/24a62aac804e47c6860711ff2e9fcfc0.jpeg" alt="你当像鸟飞往你的山" class="book-cover"></div>
+                    <span class="book-title-brief">《你当像鸟飞往你的山》</span>
+                </div>
+                <div class="book-wrapper" onclick="switchPage('page-sahara')" onmouseenter="changeBg('#fdf7e7')" onmouseleave="resetBg()">
+                    <div class="hover-quote-bubble">“每想你一次，天上飘落一粒沙。”</div>
+                    <div class="cover-container"><img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2024%2F0504%2Fc78e7dfdj00scxven007td200ab00erg007z00be.jpg&thumbnail=660x2147483647&quality=80&type=jpg" alt="撒哈拉的故事" class="book-cover"></div>
+                    <span class="book-title-brief">《撒哈拉的故事》</span>
+                </div>
             </div>
-            <div class="book-wrapper" onclick="switchPage('page-bird')">
-                <div class="cover-container"><img src="http://5b0988e595225.cdn.sohucs.com/images/20200308/24a62aac804e47c6860711ff2e9fcfc0.jpeg" alt="你当像鸟飞往你的山" class="book-cover"></div>
-                <span class="book-title-brief">《你当像鸟飞往你的山》</span>
-            </div>
-            <div class="book-wrapper" onclick="switchPage('page-sahara')">
-                <div class="cover-container"><img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2024%2F0504%2Fc78e7dfdj00scxven007td200ab00erg007z00be.jpg&thumbnail=660x2147483647&quality=80&type=jpg" alt="撒哈拉的故事" class="book-cover"></div>
-                <span class="book-title-brief">《撒哈拉的故事》</span>
+
+            <div class="home-quote-panel home-anim-4">
+                “读书的意义，大概就是用生活所感去读书，用读书所得去生活。在这里，每一层迷茫，都能在墨香中找到突围的出口。”
             </div>
         </div>
     </section>
@@ -219,11 +294,16 @@
         <div class="detail-container">
             <img src="https://i02piccdn.sogoucdn.com/3bb970cd9426903d" class="detail-img">
             <div class="info">
-                <h1 class="one-liner">“无论种子散落何处，都会长出一棵树，向着天空，挣扎着生长。”</h1>
-                <div class="meta">作者：[美] 贝蒂·史密斯 | 推荐指数：★★★★★</div>
-                <p class="desc">讲述小女孩弗兰西在贫民窟中，凭借对阅读的热爱和家庭的微光，如“天堂树”般顽强成长的故事。它不只是一本小说，更是一剂对抗生活虚无与困顿的特效药。任凭外界物质如何匮乏，内心的尊严与精神的富足永远无法被剥夺。</p>
-                <div class="quote">“活着，奋斗着，守卫着人类的尊严，这就是生命的意义。”</div>
-                <div class="back-btn" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
+                <h1 class="one-liner animate-item">“无论种子散落何处，都会长出一棵树，向着天空，挣扎着生长。”</h1>
+                <div class="meta animate-item">作者：[美] 贝蒂·史密斯 · 豆瓣 9.1 分</div>
+                <div class="tags-div animate-item">
+                    <span class="tag-item">女性成长</span>
+                    <span class="tag-item">苦难微光</span>
+                    <span class="tag-item">阅读治愈</span>
+                </div>
+                <p class="desc animate-item">讲述小女孩弗兰西在贫民窟中，凭借对阅读的热爱和家庭的微光，如“天堂树”般顽强成长的故事。它不只是一本小说，更是一剂对抗生活虚无与困顿的特效药。任凭外界物质如何匮乏，内心的尊严与精神的富足永远无法被剥夺。</p>
+                <div class="quote animate-item">“活着，奋斗着，守卫着人类的尊严，这就是生命的意义。”</div>
+                <div class="back-btn animate-item" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
             </div>
         </div>
     </section>
@@ -235,11 +315,16 @@
         <div class="detail-container">
             <img src="http://5b0988e595225.cdn.sohucs.com/images/20200308/24a62aac804e47c6860711ff2e9fcfc0.jpeg" class="detail-img">
             <div class="info">
-                <h1 class="one-liner">“风就是风。人能受得了地面上的阵阵狂风，所以也能禁得住高空的风。”</h1>
-                <div class="meta">作者：[美] 塔拉·韦斯特弗 | 推荐指数：★★★★★</div>
-                <p class="desc">这是一个关于“自我救赎”的真实奇迹。一个 17 岁前从未上过学的女孩，如何逃离疯狂控制的家庭，通过教育走向剑桥与哈佛。它会让你重新思考：教育的本质，究竟是获取知识，还是为了发现自我、重塑血肉之躯？”</p>
-                <div class="quote">“你可以穿上衣服扮演另一个人，但当你独自一人时，你究竟是谁？”</div>
-                <div class="back-btn" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
+                <h1 class="one-liner animate-item">“风就是风。人能受得了地面上的阵阵狂风，所以也能禁得住高空的风。”</h1>
+                <div class="meta animate-item">作者：[美] 塔拉·韦斯特弗 · 全球现象级畅销书</div>
+                <div class="tags-div animate-item">
+                    <span class="tag-item">自我救赎</span>
+                    <span class="tag-item">教育本质</span>
+                    <span class="tag-item">冲破原生家庭</span>
+                </div>
+                <p class="desc animate-item">这是一个关于“自我救赎”的真实奇迹。一个 17 岁前从未上过学的女孩，如何逃离疯狂控制的家庭，通过教育走向剑桥与哈佛。它会让你重新思考：教育的本质，究竟是获取知识，还是为了发现自我、重塑血肉之躯？</p>
+                <div class="quote animate-item">“你可以穿上衣服扮演另一个人，但当你独自一人时，你究竟是谁？”</div>
+                <div class="back-btn animate-item" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
             </div>
         </div>
     </section>
@@ -251,16 +336,21 @@
         <div class="detail-container">
             <img src="https://nimg.ws.126.net/?url=http%3A%2F%2Fdingyue.ws.126.net%2F2024%2F0504%2Fc78e7dfdj00scxven007td200ab00erg007z00be.jpg&thumbnail=660x2147483647&quality=80&type=jpg" class="detail-img">
             <div class="info">
-                <h1 class="one-liner">“每想你一次，天上飘落一粒沙，从此形成了撒哈拉。”</h1>
-                <div class="meta">作者：三毛 | 推荐指数：★★★★★</div>
-                <p class="desc">三毛与荷西在贫瘠的白色小镇里成婚，他们亲手用垃圾和废弃物把简陋的沙地水泥房改造成全沙漠最漂亮的“城堡”。他们看悬崖、捕鱼、行医，在漫天飞沙的孤独旷野里，将日子熬炼成璀璨浪漫的生命奇迹。</p>
-                <div class="quote">“生命的过程，无论是阳春白雪，青菜豆腐，我都得尝尝是什么滋味，才不枉来走这么一遭。”</div>
-                <div class="back-btn" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
+                <h1 class="one-liner animate-item">“每想你一次，天上飘落一粒沙，从此形成了撒哈拉。”</h1>
+                <div class="meta animate-item">作者：三毛 · 华语文学经典浪漫史诗</div>
+                <div class="tags-div animate-item">
+                    <span class="tag-item">异域流浪</span>
+                    <span class="tag-item">至死不渝</span>
+                    <span class="tag-item">旷野美学</span>
+                </div>
+                <p class="desc animate-item">三毛与荷西在贫瘠的白色小镇里成婚，他们亲手用垃圾 and 废弃物把简陋的沙地水泥房改造成全沙漠最漂亮的“城堡”。他们看悬崖、捕鱼、行医，在漫天飞沙的孤独旷野里，将日子熬炼成璀璨浪漫的生命奇迹。</p>
+                <div class="quote animate-item">“生命的过程，无论是阳春白雪，青菜豆腐，我都得尝尝是什么滋味，才不枉来走这么一遭。”</div>
+                <div class="back-btn animate-item" onclick="switchPage('home-page')">← 合上书本，返回书架</div>
             </div>
         </div>
     </section>
 
-    <audio id="bg-audio" loop src=""></audio>
+    <audio id="bg-audio" loop src="https://music.163.com/song/media/outer/url?id=1832745692.mp3"></audio>
 
     <script>
         function switchPage(targetPageId) {
@@ -269,123 +359,143 @@
 
             const targetPage = document.getElementById(targetPageId);
             if (targetPage) targetPage.classList.add('active');
-            
-            initAudioContext();
         }
 
-        // 1. 动态落叶生成
-        function createLeavesSystem() {
-            const box = document.getElementById('leaves-box');
-            const total = 25;
-            const colors = ['#6f8e30', '#84aa43'];
-            for(let i=0; i<total; i++) {
-                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                svg.classList.add('leaf');
-                svg.setAttribute('viewBox', '0 0 24 24');
-                svg.style.width = `${Math.random() * 15 + 20}px`;
-                svg.style.left = `${Math.random() * 100}%`;
+        function changeBg(color) { document.getElementById('home-page').style.background = color; }
+        function resetBg() { document.getElementById('home-page').style.background = "linear-gradient(135deg, #eef0e5 0%, var(--color-beige) 100%)"; }
+
+        // 中文文字微缩多色流光彩蛋微粒系统
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 120 };
+
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.3 + 1.5;
+                this.baseX = this.x;
+                this.baseY = this.y;
+                this.density = (Math.random() * 18) + 6;
                 
+                const bookChars = ["树", "鸟", "山", "沙", "荒", "野", "生", "长", "自", "由", "魂", "梦", "海", "风", "流", "浪", "尊", "严", "翠", "蓝", "金"];
+                this.text = bookChars[Math.floor(Math.random() * bookChars.length)];
+                
+                const morandiColors = [
+                    'rgba(111, 142, 48, 0.12)',  
+                    'rgba(94, 148, 176, 0.12)',  
+                    'rgba(223, 106, 36, 0.10)',  
+                    'rgba(61, 90, 69, 0.14)',    
+                    'rgba(172, 167, 90, 0.12)'   
+                ];
+                this.color = morandiColors[Math.floor(Math.random() * morandiColors.length)];
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.font = `500 ${this.size * 4}px "PingFang SC", "Hiragino Sans GB", sans-serif`;
+                ctx.fillText(this.text, this.x, this.y);
+            }
+            update() {
+                if (mouse.x != null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        let force = (mouse.radius - distance) / mouse.radius;
+                        let directionX = dx / distance;
+                        let directionY = dy / distance;
+                        this.x -= directionX * force * this.density;
+                        this.y -= directionY * force * this.density;
+                    } else {
+                        if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) * 0.05; }
+                        if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) * 0.05; }
+                    }
+                } else {
+                    if (this.x !== this.baseX) { this.x -= (this.x - this.baseX) * 0.05; }
+                    if (this.y !== this.baseY) { this.y -= (this.y - this.baseY) * 0.05; }
+                }
+                
+                this.baseY -= 0.1;
+                if (this.baseY < -20) { this.baseY = canvas.height + 20; this.y = this.baseY; }
+            }
+        }
+
+        function initParticles() {
+            resizeCanvas(); particles = [];
+            for (let i = 0; i < 75; i++) { particles.push(new Particle()); }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) { particles[i].update(); particles[i].draw(); }
+            requestAnimationFrame(animateParticles);
+        }
+
+        function createLeavesSystem() {
+            const box = document.getElementById('leaves-box'); if (!box) return;
+            const colors = ['#6f8e30', '#84aa43'];
+            for(let i=0; i<25; i++) {
+                const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                svg.classList.add('leaf'); svg.setAttribute('viewBox', '0 0 24 24');
+                svg.style.width = `${Math.random() * 15 + 20}px`; svg.style.left = `${Math.random() * 100}%`;
                 const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
                 path.setAttribute('d', 'M12,2 C17,7 22,12 12,22 C2,12 7,7 12,2 Z');
                 path.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
                 svg.appendChild(path);
-
-                svg.style.animationDuration = `${Math.random() * 6 + 5}s`;
-                svg.style.animationDelay = `${Math.random() * -10}s`;
+                svg.style.animationDuration = `${Math.random() * 6 + 5}s`; svg.style.animationDelay = `${Math.random() * -10}s`;
                 box.appendChild(svg);
             }
         }
 
-        // 2. 无边框灵动透明七彩肥皂泡生成
         function createBubbleSystem() {
-            const box = document.getElementById('bubble-box');
-            const total = 24;
-            for(let i=0; i<total; i++) {
-                const bubble = document.createElement('div');
-                bubble.classList.add('bubble');
-                const size = Math.random() * 32 + 18; 
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${Math.random() * 100}%`;
-                
-                // 完全打破死板：随机化动画持续时间和负延迟，实现全屏幕不均匀错落升空
-                bubble.style.animationDuration = `${Math.random() * 8 + 6}s`;
-                bubble.style.animationDelay = `${Math.random() * -15}s`;
-                box.appendChild(bubble);
+            const box = document.getElementById('bubble-box'); if (!box) return;
+            for(let i=0; i<26; i++) {
+                const bubble = document.createElement('div'); bubble.classList.add('bubble');
+                const size = Math.random() * 32 + 18; bubble.style.width = `${size}px`; bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`; bubble.style.animationDuration = `${Math.random() * 8 + 6}s`;
+                bubble.style.animationDelay = `${Math.random() * -15}s`; box.appendChild(bubble);
             }
         }
 
-        // 3. 经典流沙生成
         function createSandSystem() {
-            const sandBox = document.getElementById('sand-box');
-            const totalGrains = 40;
-            for (let i = 0; i < totalGrains; i++) {
-                const grain = document.createElement('div');
-                grain.classList.add('grain');
-                const size = Math.random() * 4 + 2;
-                grain.style.width = `${size}px`;
-                grain.style.height = `${size}px`;
-                grain.style.left = `${Math.random() * 100}%`;
-                grain.style.animationDuration = `${Math.random() * 5 + 4}s`;
-                grain.style.animationDelay = `${Math.random() * -8}s`;
-                sandBox.appendChild(grain);
+            const sandBox = document.getElementById('sand-box'); if (!sandBox) return;
+            for (let i = 0; i < 40; i++) {
+                const grain = document.createElement('div'); grain.classList.add('grain');
+                const size = Math.random() * 4 + 2; grain.style.width = `${size}px`; grain.style.height = `${size}px`;
+                grain.style.left = `${Math.random() * 100}%`; grain.style.animationDuration = `${Math.random() * 5 + 4}s`;
+                grain.style.animationDelay = `${Math.random() * -8}s`; sandBox.appendChild(grain);
             }
         }
 
-        let audioCtx, padOsc, filter, gainNode;
+        // 🎵 优雅重构的真实音乐控制器
         let isPlaying = false;
-
-        function initAudioContext() {
-            if (audioCtx) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                padOsc = audioCtx.createOscillator();
-                padOsc.type = 'triangle'; 
-                padOsc.frequency.setValueAtTime(65.41, audioCtx.currentTime); 
-
-                filter = audioCtx.createBiquadFilter();
-                filter.type = 'lowpass';
-                filter.frequency.setValueAtTime(180, audioCtx.currentTime);
-
-                gainNode = audioCtx.createGain();
-                gainNode.gain.setValueAtTime(0.0, audioCtx.currentTime);
-
-                padOsc.connect(filter);
-                filter.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
-                padOsc.start();
-            } catch(e) { console.log(e); }
-        }
-
+        const nativeAudio = document.getElementById('bg-audio');
+        
         function toggleMusic() {
-            initAudioContext();
             const btn = document.querySelector('.music-toggle');
-            const nativeAudio = document.getElementById('bg-audio');
-
             if (!isPlaying) {
-                if (nativeAudio.src && nativeAudio.src !== window.location.href) {
-                    nativeAudio.play();
-                } else if (audioCtx && gainNode) {
-                    audioCtx.resume();
-                    gainNode.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + 2);
-                }
-                btn.classList.add('playing');
-                isPlaying = true;
+                nativeAudio.play().then(() => {
+                    btn.classList.add('playing');
+                    isPlaying = true;
+                }).catch(err => {
+                    console.log("播放被浏览器拦截，需要用户点击交互后生效：", err);
+                });
             } else {
-                if (nativeAudio.src && nativeAudio.src !== window.location.href) {
-                    nativeAudio.pause();
-                } else if (gainNode) {
-                    gainNode.gain.linearRampToValueAtTime(0.0, audioCtx.currentTime + 1);
-                }
+                nativeAudio.pause();
                 btn.classList.remove('playing');
                 isPlaying = false;
             }
         }
 
         window.onload = function() {
-            createLeavesSystem();
-            createBubbleSystem();
-            createSandSystem();
+            initParticles(); animateParticles();
+            createLeavesSystem(); createBubbleSystem(); createSandSystem();
         }
     </script>
 </body>
