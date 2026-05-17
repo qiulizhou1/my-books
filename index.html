@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>灵魂的朝圣：三部关于生长与自由的心灵之书</title>
+    <title>去飞翔，去扎根，去热烈地生活：三部关于生命与自由的心灵之书</title>
     <style>
         /* 核心高级色彩系统 */
         :root {
@@ -278,8 +278,8 @@
     <section id="home-page" class="page active">
         <canvas id="particle-canvas"></canvas>
         <div class="home-content-box">
-            <h1 class="main-title home-anim-1">在文字中流浪，在阵痛中盛开</h1>
-            <p class="subtitle home-anim-2">用笔尖轻触封面，翻开属于它们的独立篇章</p>
+            <h1 class="main-title home-anim-1">去飞翔，去扎根，去热烈地生活</h1>
+            <p class="subtitle home-anim-2">三部关于生命、自由与自我重塑的心灵史诗</p>
             
             <div class="book-shelf home-anim-3">
                 <div class="book-wrapper" onclick="switchPage('page-brooklyn')" onmouseenter="changeBg('#f4f7f2')" onmouseleave="resetBg()">
@@ -608,15 +608,12 @@
         // ==================== 🛠️ 纯净文本拆分跳字系统 ====================
         function initTextLetterBounce() {
             document.querySelectorAll('.one-liner').forEach(el => {
-                // 读取原始 HTML（保留内置的 <br> 标签）
                 const rawHTML = el.innerHTML.trim();
-                el.innerHTML = ''; // 清空
+                el.innerHTML = ''; 
 
-                // 巧妙利用临时小容器，将原本的文字和 <br> 节点完美识别出来
                 const tempDiv = document.createElement('div');
                 tempDiv.innerHTML = rawHTML;
 
-                // 遍历子节点，若是文字就拆分为单个字 span，若是 <br> 标签则直接保留
                 tempDiv.childNodes.forEach(node => {
                     if (node.nodeType === Node.TEXT_NODE) {
                         const text = node.textContent;
@@ -650,7 +647,7 @@
         window.onload = function() {
             initParticles(); animateParticles();
             createLeavesSystem(); createBubbleSystem(); createSandSystem();
-            initTextLetterBounce(); // 纯净跳字启动
+            initTextLetterBounce(); 
         }
     </script>
 </body>
